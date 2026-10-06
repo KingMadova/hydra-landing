@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hydra — Votre rappel d'eau intelligent</title>
+  <meta name="description" content="Hydratez-vous intelligemment. Objectif personnalisé, ajustement météo, 100% privé." />
+  <link rel="icon" type="image/png" href="drop-3d.png" />
+  <style>
+    :root {
+      --bg: #000000;
+      --bg-soft: #07182F;
+      --accent: #2DD4BF;
+      --primary: #4A90D9;
+      --glow: #5EEAD4;
+      --text: #f5f5f7;
+      --text-dim: #86868b;
+      --blue-link: #2997ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 22px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-inner {
+      max-width: 1000px; margin: 0 auto; padding: 0 22px;
+      height: 48px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 17px; }
+    .nav-logo img { width: 24px; height: 24px; }
+    .nav-cta {
+      background: var(--blue-link); color: #fff; text-decoration: none;
+      font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 980px;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: #0077ed; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 90px 0 60px; }
+    .hero-logo {
+      width: 140px; height: 140px; margin: 0 auto 30px;
+      filter: drop-shadow(0 0 60px rgba(45,212,191,0.35));
+    }
+    .hero h1 {
+      font-size: clamp(44px, 8vw, 80px);
+      font-weight: 700; letter-spacing: -0.02em; line-height: 1.05;
+      background: linear-gradient(180deg, #ffffff 0%, var(--glow) 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero .sub {
+      font-size: clamp(19px, 3vw, 28px); font-weight: 600;
+      color: var(--text-dim); margin-top: 12px; letter-spacing: -0.01em;
+    }
+    .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; font-size: 17px; font-weight: 500;
+      padding: 12px 26px; border-radius: 980px; text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-primary { background: var(--blue-link); color: #fff; }
+    .btn-primary:hover { background: #0077ed; }
+    .btn-ghost { color: var(--blue-link); }
+    .btn-ghost:hover { text-decoration: underline; }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-title {
+      font-size: clamp(32px, 5vw, 56px); font-weight: 700;
+      letter-spacing: -0.02em; text-align: center; line-height: 1.1;
+    }
+    .section-sub {
+      font-size: clamp(17px, 2.5vw, 24px); color: var(--text-dim);
+      text-align: center; margin-top: 12px; font-weight: 500;
+    }
+
+    /* Feature grid */
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 50px;
+    }
+    .card {
+      background: #1d1d1f; border-radius: 24px; padding: 36px 30px;
+      transition: transform .3s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card svg { width: 34px; height: 34px; color: var(--glow); margin-bottom: 18px; }
+    .card h3 { font-size: 21px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .card p { font-size: 15px; color: var(--text-dim); line-height: 1.6; }
+
+    /* Privacy band */
+    .privacy {
+      background: linear-gradient(180deg, #07182F 0%, #000 100%);
+      border-radius: 28px; padding: 60px 30px; text-align: center;
+      margin-top: 40px;
+    }
+    .privacy h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.02em; }
+    .privacy p { color: var(--text-dim); font-size: 17px; max-width: 600px; margin: 16px auto 0; }
+
+    /* Install steps */
+    .steps { margin-top: 50px; display: grid; gap: 28px; max-width: 640px; margin-left: auto; margin-right: auto; }
+    .step { display: flex; gap: 20px; align-items: flex-start; }
+    .step-num {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px;
+    }
+    .step h4 { font-size: 19px; font-weight: 600; margin-bottom: 4px; }
+    .step p { color: var(--text-dim); font-size: 15px; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 30px 0; text-align: center;
+    }
+    footer p { color: var(--text-dim); font-size: 13px; }
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 0 40px; }
+      .hero-logo { width: 110px; height: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo"><img src="drop-3d.png" alt="" /> Hydra</div>
+      <a class="nav-cta" href="https://github.com/KingMadova/hydra-landing/releases/download/v1.0.0/application-1656e31f-c087-4a50-a1bd-0825f5716c9a.apk">Télécharger</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <img class="hero-logo" src="drop-3d.png" alt="Hydra" />
+      <h1>Hydra.</h1>
+      <p class="sub">L'hydratation, intelligemment simple.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/KingMadova/hydra-landing/releases/download/v1.0.0/application-1656e31f-c087-4a50-a1bd-0825f5716c9a.apk">Télécharger gratuitement</a>
+        <a class="btn btn-ghost" href="https://yekolasante.alvineyoka.com/">Découvrir &rsaquo;</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Conçu pour votre bien-être.</h2>
+      <p class="section-sub">Chaque détail compte.</p>
+      <div class="grid">
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.5"/></svg>
+          <h3>Objectif personnalisé</h3>
+          <p>Calculé selon votre poids et ajusté en temps réel à la météo locale.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 4 4.5 4 8a4 4 0 0 1-8 0c0-3.5 3-5 4-8z"/><path d="M12 21a6 6 0 0 0 6-6c0-2-1-3.5-2-4.5"/></svg>
+          <h3>Série motivante</h3>
+          <p>Suivez vos jours consécutifs et battez vos records personnels.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <h3>Rappels discrets</h3>
+          <p>Des notifications intelligentes avec action rapide, même app fermée.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <h3>100% privé</h3>
+          <p>Aucune donnée ne quitte votre téléphone. Aucun compte requis.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 5 7 8.5 7 12a7 7 0 0 1-14 0c0-3.5 3-7 7-12z"/></svg>
+          <h3>Design soigné</h3>
+          <p>Interface en verre, animations fluides et retour sonore naturel.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/></svg>
+          <h3>Historique clair</h3>
+          <p>Visualisez vos 7 derniers jours d'un seul coup d'œil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="privacy">
+        <h2>Votre vie privée. Non négociable.</h2>
+        <p>Hydra ne collecte rien, ne trace rien, ne partage rien. Vos données d'hydratation restent sur votre appareil, point final.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="container">
+      <h2 class="section-title">Installation en trois étapes.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Téléchargez l'application</h4>
+            <p>Appuyez sur le bouton ci-dessous pour obtenir la dernière version.</p>
+            <a class="btn btn-primary" style="margin-top:14px" href="https://github.com/KingMadova/hydra-landing/releases/download/v1.0.0/application-1656e31f-c087-4a50-a1bd-0825f5716c9a.apk" download>Télécharger Hydra</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Autorisez la source</h4>
+            <p>Android vous demandera d'autoriser l'installation depuis votre navigateur. C'est un contrôle standard, en toute sécurité.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Installez et hydratez-vous</h4>
+            <p>Ouvrez le fichier, appuyez sur Installer. C'est tout.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<footer>
+  <div class="container">
+    <p class="footer-main">
+      Conçu par <strong>Alvine Yoka</strong> pour la communauté
+      <em>Les Conquérants d'une Excellente Vie</em>
+    </p>
+    <p class="footer-links">
+      <a href="#">Confidentialité</a> ·
+      <a href="mailto:alvineyoka@gmail.com">Contact</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
